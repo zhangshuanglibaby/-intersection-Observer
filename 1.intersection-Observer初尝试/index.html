@@ -1,0 +1,72 @@
+<!--
+ * @Date: 2022-12-05 17:39:43
+ * @LastEditors: zhangshuangli
+ * @LastEditTime: 2022-12-05 20:56:02
+ * @Description: 这是****文件
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      .container-box {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(133px, 1fr));
+        grid-gap: 50px;
+        grid-auto-flow: row dense;
+        grid-auto-rows: 20px;
+      }
+      .container-box li {
+        width: 100%;
+        background: gray;
+        color: #ddd;
+        transition: background 0.4s ;
+      }
+      .container-box li:nth-of-type(3n+1) {
+        grid-row: auto / span 5;
+      }
+
+      .container-box li:nth-of-type(3n+2) {
+        grid-row: auto / span 6;
+      }
+
+      .container-box li:nth-of-type(3n+3) {
+        grid-row: auto / span 8;
+      }
+
+      .container-box .active {
+        background: yellow;
+      }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <ul class="container-box"></ul>
+  </div>
+</body>
+</html>
+<script>
+  // const container = document.getElementsByClassName('container')
+  const ul = document.querySelector('.container-box')
+  for(let i = 0; i < 100; i++) {
+    const li = document.createElement('li')
+    li.innerHTML = i + 1
+    ul.appendChild(li)
+  }
+  const liElement = document.querySelectorAll('li')
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      // console.log(entry.target.classList.toggle)
+      entry.target.classList.toggle('active', entry.isIntersecting)
+    })
+  }, {
+    threshold: 0.5
+  })
+  liElement.forEach(item => {
+    observer.observe(item)
+  })
+</script>

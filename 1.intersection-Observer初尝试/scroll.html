@@ -1,0 +1,83 @@
+<!--
+ * @Date: 2022-12-05 21:06:15
+ * @LastEditors: zhangshuangli
+ * @LastEditTime: 2022-12-05 22:26:14
+ * @Description: 这是****文件
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 1000px;
+        width: 2000px;
+        overflow: auto;
+      }
+      .box {
+        width: 400px;
+        height: 200px;
+        background: purple;
+        margin-top: 100px;
+      }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div id="box" class="box"></div>
+    <div class="positon">
+      <div id="x"></div>
+      <div id="y"></div>
+      <div id="width"></div>
+      <div id="height"></div>
+      <div id="top"></div>
+      <div id="right"></div>
+      <div id="bottom"></div>
+      <div id="left"></div>
+      <div id="visible"></div>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+  const box = document.getElementById('box')
+  const x = document.getElementById('x')
+  const y = document.getElementById('y')
+  const width = document.getElementById('width')
+  const height = document.getElementById('height')
+  const topPosition = document.getElementById('top')
+  const rightPosition = document.getElementById('right')
+  const bottomPosition = document.getElementById('bottom')
+  const leftPosition = document.getElementById('left')
+  const visible = document.getElementById('visible')
+  window.addEventListener('scroll', event => {
+    console.log(event, 'ecent')
+    // console.log(event, 'event')
+    /*
+      getBoundingClientRect方法用于获取页面中某个元素的左、右、上、下 相对浏览器视口的位置
+      top：元素上边到视窗上边的距离;
+      right：元素右边到视窗左边的距离;
+      bottom：元素下边到视窗上边的距离;
+      left：元素左边到视窗左边的距离;
+      width：是元素自身的宽
+      height是元素自身的高
+    */
+   const rectObject = box.getBoundingClientRect()
+   x.innerHTML = `x: ${rectObject.x}`
+   y.innerHTML = `y: ${rectObject.y}`
+   width.innerHTML = `width: ${rectObject.width}`
+   height.innerHTML = `height: ${rectObject.height}`
+   topPosition.innerHTML = `top: ${rectObject.top}`
+   rightPosition.innerHTML = `right: ${rectObject.right}`
+   bottomPosition.innerHTML = `bottom: ${rectObject.bottom}`
+   leftPosition.innerHTML = `left: ${rectObject.left}`
+   visible.innerHTML = ``
+    // console.log(box.getBoundingClientRect())
+  })
+</script>
