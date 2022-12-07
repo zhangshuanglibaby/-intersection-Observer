@@ -1,7 +1,7 @@
 <!--
  * @Date: 2022-12-05 21:06:15
  * @LastEditors: zhangshuangli
- * @LastEditTime: 2022-12-05 22:26:14
+ * @LastEditTime: 2022-12-07 17:05:22
  * @Description: 这是****文件
 -->
 <!DOCTYPE html>
@@ -16,15 +16,15 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 1000px;
-        width: 2000px;
+        height: 2000px;
+        width: 2500px;
         overflow: auto;
       }
       .box {
         width: 400px;
         height: 200px;
         background: purple;
-        margin-top: 100px;
+        margin-top: 1000px;
       }
     </style>
 </head>
@@ -56,6 +56,22 @@
   const bottomPosition = document.getElementById('bottom')
   const leftPosition = document.getElementById('left')
   const visible = document.getElementById('visible')
+
+  const isVisible = ({ top, left, right, bottom}) => {
+    const viewHeight = window.innerHeight || document.documentElement.clientHeight
+    const viewWidth = window.innerWidth || document.documentElement.clientWidth
+    /*
+      元素在视口内一定会满足以下条件
+      当top >=0(即往上滚动)，top要 <= 视窗的高度; 当 top < 0(即往下滚动)，bottom >= 0
+      当left >=0(即往右滚动)，left要 <= 视窗的宽度；当 left < 0(即往左边滚动)，right >= 0
+
+    */
+    if((top >= 0 && top <= viewHeight) || (top < 0 && bottom >= 0)) {
+      return left >= 0 ? left <= viewWidth : right >= 0 
+    }
+    return false
+  }
+
   window.addEventListener('scroll', event => {
     console.log(event, 'ecent')
     // console.log(event, 'event')
@@ -68,16 +84,18 @@
       width：是元素自身的宽
       height是元素自身的高
     */
-   const rectObject = box.getBoundingClientRect()
-   x.innerHTML = `x: ${rectObject.x}`
-   y.innerHTML = `y: ${rectObject.y}`
-   width.innerHTML = `width: ${rectObject.width}`
-   height.innerHTML = `height: ${rectObject.height}`
-   topPosition.innerHTML = `top: ${rectObject.top}`
-   rightPosition.innerHTML = `right: ${rectObject.right}`
-   bottomPosition.innerHTML = `bottom: ${rectObject.bottom}`
-   leftPosition.innerHTML = `left: ${rectObject.left}`
-   visible.innerHTML = ``
+    const rectObject = box.getBoundingClientRect()
+    const { x, y, width, height, top, right, bottom, left} = rectObject
+    x.innerHTML = `x: ${x}`
+    y.innerHTML = `y: ${y}`
+    width.innerHTML = `width: ${width}`
+    height.innerHTML = `height: ${height}`
+    topPosition.innerHTML = `top: ${top}`
+    rightPosition.innerHTML = `right: ${right}`
+    bottomPosition.innerHTML = `bottom: ${bottom}`
+    leftPosition.innerHTML = `left: ${left}`
+    console.log(isVisible({top, right, left, bottom}), 'visible')
+    visible.innerHTML = `visible: ${isVisible({top, right, left, bottom})}`
     // console.log(box.getBoundingClientRect())
   })
 </script>
